@@ -1,5 +1,6 @@
 package com.bdiplus.task.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @AllArgsConstructor
@@ -7,6 +8,7 @@ import lombok.*;
 @Setter
 @Getter
 public class TaskRequest {
+    @NotNull(message = "title cannot be null")
     private String title;
     private String description;
 

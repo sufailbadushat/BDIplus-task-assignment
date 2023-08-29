@@ -28,5 +28,10 @@ public class TaskController {
     public ResponseEntity<List<TaskResponse>> getAllTasks() throws TasksNotFoundException {
         return new ResponseEntity<>(taskService.getAllTasks(), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) throws TasksNotFoundException {
+        return new ResponseEntity<>(taskService.getTaskById(id), HttpStatus.OK);
+    }
 }
 

@@ -3,6 +3,7 @@ package com.bdiplus.task.service;
 import com.bdiplus.task.dto.TaskRequest;
 import com.bdiplus.task.dto.TaskResponse;
 import com.bdiplus.task.entity.Task;
+import com.bdiplus.task.exception.TasksNotFoundException;
 import com.bdiplus.task.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,11 @@ public class TaskService {
 
 
     //Get all tasks using dto converter
-    public List<TaskResponse> getAllTasks(){
+    public List<TaskResponse> getAllTasks() throws TasksNotFoundException {
         List<Task> tasks = taskRepository.findAll();
+        if(tasks.isEmpty()){
+            throw new TasksNotFoundException("No Tasks found!");
+        }
         return tasks
                 .stream()
                 .map(this::convertToDto)

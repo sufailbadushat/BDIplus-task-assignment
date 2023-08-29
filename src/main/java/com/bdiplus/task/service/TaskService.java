@@ -43,6 +43,7 @@ public class TaskService {
     }
     public TaskResponse convertToDto(Task task){
         TaskResponse taskResponse=new TaskResponse();
+        taskResponse.setId(task.getId());
         taskResponse.setTitle(task.getTitle());
         taskResponse.setDescription(task.getDescription());
 
@@ -58,6 +59,7 @@ public class TaskService {
         }
         else {
             TaskResponse taskResponse = new TaskResponse();
+            taskResponse.setId(task.getId());
             taskResponse.setTitle(task.getTitle());
             taskResponse.setDescription(task.getDescription());
             return taskResponse;

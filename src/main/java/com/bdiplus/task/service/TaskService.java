@@ -7,9 +7,11 @@ import com.bdiplus.task.exception.TasksNotFoundException;
 import com.bdiplus.task.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,4 +48,22 @@ public class TaskService {
 
         return taskResponse;
     }
+
+    //Get task by its id
+    public TaskResponse getTaskById(Long id) throws TasksNotFoundException {
+
+        Task task = taskRepository.findByUserId(id);
+        if(task == null){
+            throw new TasksNotFoundException("Task not found with id: " + id);
+        }
+        else {
+            TaskResponse taskResponse = new TaskResponse();
+            taskResponse.setTitle(task.getTitle());
+            taskResponse.setDescription(task.getDescription());
+            return taskResponse;
+        }
+    }
+
+
+
 }

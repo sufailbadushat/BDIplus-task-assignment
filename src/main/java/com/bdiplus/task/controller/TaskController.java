@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.ldap.LdapName;
 import java.util.List;
 
 @RestController
@@ -38,6 +39,11 @@ public class TaskController {
     public ResponseEntity<String> deleteById(@PathVariable Long id) throws TasksNotFoundException {
         taskService.deleteById(id);
         return ResponseEntity.ok("Task deleted successfully");
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Task> updateById(@PathVariable Long id, @RequestBody @Valid TaskRequest taskRequest) throws TasksNotFoundException {
+        return new ResponseEntity<>(taskService.updateById(id, taskRequest), HttpStatus.OK);
     }
 }
 

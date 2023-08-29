@@ -53,7 +53,6 @@ public class TaskService {
 
 //Get task by its id
     public TaskResponse getTaskById(Long id) throws TasksNotFoundException {
-
         Task task = taskRepository.findByUserId(id);
         if(task == null){
             throw new TasksNotFoundException("Task not found with id: " + id);
@@ -69,13 +68,27 @@ public class TaskService {
 
 //Delete a task by its id
     public void deleteById(Long id) throws TasksNotFoundException {
-
         Task task = taskRepository.findByUserId(id);
         if(task == null){
             throw new TasksNotFoundException("Task not found with id: " + id);
         }
         else {
             taskRepository.deleteByTaskId(id);
+        }
+    }
+
+
+//Update task by its id
+    public Task updateById(Long id, TaskRequest taskRequest) throws TasksNotFoundException {
+        Task existingTask=taskRepository.findByUserId(id);
+
+        if (existingTask != null) {
+            existingTask.setTitle(taskRequest.getTitle());
+            existingTask.setDescription(taskRequest.getDescription());
+            return taskRepository.save(existingTask);
+            // taskRepository.updateTaskById(id, taskRequest.getTitle(), taskRequest.getDescription());
+        }else {
+            throw new TasksNotFoundException("Task not found with id: " +id);
         }
     }
 }

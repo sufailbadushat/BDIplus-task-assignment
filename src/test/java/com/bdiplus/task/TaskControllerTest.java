@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -90,12 +91,16 @@ public class TaskControllerTest {
 
         Mockito.when(taskService.getTaskById(taskId)).thenReturn(RECORD_5);
 
-        TaskResponse responseEntity=taskService.getTaskById(taskId);
+        ResponseEntity<TaskResponse> responseEntity=taskController.getTaskById(taskId);
 
         assertNotNull(responseEntity);
-        assertEquals(RECORD_5.getId(), responseEntity.getId());
-        assertEquals(RECORD_5.getTitle(), responseEntity.getTitle());
-        assertEquals(RECORD_5.getDescription(), responseEntity.getDescription());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        assertEquals(RECORD_5.getId(), Objects.requireNonNull(responseEntity.getBody()).getId());
+        assertEquals(RECORD_5.getTitle(), responseEntity.getBody().getTitle());
+        assertEquals(RECORD_5.getDescription(), responseEntity.getBody().getDescription());
+
+        verify(taskService, times(1)).getTaskById(taskId);
 
     }
 

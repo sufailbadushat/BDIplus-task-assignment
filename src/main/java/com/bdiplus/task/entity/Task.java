@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "task")
 public class Task {
@@ -15,6 +14,17 @@ public class Task {
     private Long id;
     private String title;
     private String description;
+
+    public Task(Long id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
+
+    public Task() {
+
+    }
+
 
     public Long getId() {
         return id;

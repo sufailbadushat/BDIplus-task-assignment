@@ -3,13 +3,21 @@ package com.bdiplus.task.dto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class TaskResponse {
 
     private Long id;
     private String title;
     private String description;
+
+    public TaskResponse() {
+    }
+
+    public TaskResponse(Long id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
 
     public Long getId() {
         return id;

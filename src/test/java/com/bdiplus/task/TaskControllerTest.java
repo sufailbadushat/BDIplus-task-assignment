@@ -5,10 +5,7 @@ import com.bdiplus.task.dto.TaskRequest;
 import com.bdiplus.task.dto.TaskResponse;
 import com.bdiplus.task.entity.Task;
 import com.bdiplus.task.exception.TasksNotFoundException;
-import com.bdiplus.task.repository.TaskRepository;
 import com.bdiplus.task.service.TaskService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,9 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +21,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
@@ -41,8 +33,7 @@ import static org.mockito.Mockito.*;
 public class TaskControllerTest {
     private MockMvc mockMvc;
 
-    @Mock
-    private TaskRepository taskRepository;
+
     @Mock
     private TaskService taskService;
     @InjectMocks
@@ -64,17 +55,15 @@ public class TaskControllerTest {
 
         Mockito.when(taskService.getAllTasks()).thenReturn(records);
 
-        ResponseEntity<List<TaskResponse>> responseEntity=taskController.getAllTasks();
+//        ResponseEntity<List<TaskResponse>> responseEntity=taskController.getAllTasks();
+//        assertEquals(3, responseEntity.getBody().size());
+//        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+//        verify(taskService).getAllTasks();
 
-        assertEquals(3, responseEntity.getBody().size());
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-
-        verify(taskService).getAllTasks();
-
-//        mockMvc.perform(MockMvcRequestBuilders
-//                        .get("/api/task/all-tasks")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/task/all-tasks")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
